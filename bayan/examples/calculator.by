@@ -1,0 +1,64 @@
+# Simple Calculator Example
+# مثال على آلة حاسبة بسيطة
+
+hybrid {
+    # Traditional programming part
+    def add(a, b):
+    {
+        return a + b
+    }
+    
+    def subtract(a, b):
+    {
+        return a - b
+    }
+    
+    def multiply(a, b):
+    {
+        return a * b
+    }
+    
+    def divide(a, b):
+    {
+        if b == 0:
+        {
+            print("Error: Division by zero")
+            return None
+        }
+        return a / b
+    }
+    
+    # Logical facts about operations
+    operation("add", "addition").
+    operation("subtract", "subtraction").
+    operation("multiply", "multiplication").
+    operation("divide", "division").
+    
+    # Test calculations
+    print("=== Calculator ===")
+    print("")
+
+    x = 10
+    y = 5
+
+    print("x = " + str(x))
+    print("y = " + str(y))
+    print("")
+
+    result1 = add(x, y)
+    print("x + y = " + str(result1))
+
+    result2 = subtract(x, y)
+    print("x - y = " + str(result2))
+
+    result3 = multiply(x, y)
+    print("x * y = " + str(result3))
+
+    result4 = divide(x, y)
+    print("x / y = " + str(result4))
+
+    print("")
+    print("Available operations:")
+    query operation(?op, ?name).
+}
+

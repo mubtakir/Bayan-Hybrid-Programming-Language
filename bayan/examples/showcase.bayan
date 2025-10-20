@@ -1,0 +1,59 @@
+# مثال هجيني مبهر في بيان — مزج OOP + منطق + مكتبة بايثون
+
+print("[1] OOP: وراثة + super()\n")
+
+class A:
+{
+    def who(): { print("A") }
+}
+
+class B(A):
+{
+    def who():
+    {
+        super().who()
+        print("B")
+    }
+}
+
+b = B()
+b.who()
+
+print("\n[2] تراكيب بيانات + تكرار + عضوية\n")
+nums = [1, 2, 3, 4]
+print(3 in nums)  # True
+for n in nums:
+{
+    if n % 2 == 0:
+    {
+        print(n)
+    }
+}
+
+print("\n[3] تكامل بايثون (math)\n")
+import math
+print(math.sqrt(49))  # 7.0
+
+print("\n[4] منطق بياني داخل نفس الملف — الوصول (reachable)\n")
+# منطق: حقائق + قواعد + استعلامات (خارج دوال/أصناف)
+# ملاحظة: لا نستخدم ":" بعد hybrid حسب نحو البيان، بل { } مباشرة
+hybrid
+{
+    fact edge(a, b).
+    fact edge(b, c).
+    fact edge(c, d).
+
+    # الوصول التعددي reachable عبر انتقال مباشر أو عبر وسيط
+    rule reachable(X, Y) :- edge(X, Y).
+    rule reachable(X, Y) :- edge(X, Z), reachable(Z, Y).
+
+    print("reachable(a, ?Y):")
+    query reachable(a, ?Y).
+}
+
+print("\n[5] مزج النتائج — استنتاج منطقي ثم متابعة تنفيذ تقليدي\n")
+# بعد تنفيذ الاستعلام في الكتلة الهجينة، نكمل تنفيذنا التقليدي هنا
+# (عرضنا لميزة المزج بين الأنماط داخل نفس المصدر)
+
+print("تم.")
+
