@@ -1,5 +1,5 @@
 # Bayan — Hybrid Programming Language (لغة بيان)
-
+Basil Yahya Abdullah
 Bayan is a hybrid language that combines traditional imperative/OOP programming with a Prolog-like logical layer, all in one source. It supports Arabic and Latin identifiers, Python interop, multiple inheritance with C3 MRO, and advanced error reporting with code frames and optional colors.
 
 - Language: Arabic-friendly identifiers `[a-zA-Z_\u0600-\u06FF][a-zA-Z0-9_\u0600-\u06FF]*`
