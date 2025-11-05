@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use Bayan in your research or project, please cite it as below."
+title: "Bayan: A Hybrid Programming Language"
+version: 1.0.0
+date-released: 2024-11-05
+authors:
+  - family-names: "Abdullah"
+    given-names: "Basel Yahya"
+    name-particle: "باسل يحيى عبدالله"
+    orcid: ""
+repository-code: "https://github.com/mubtakir/Bayan-Hybrid-Programming-Language"
+url: "https://github.com/mubtakir/Bayan-Hybrid-Programming-Language"
+abstract: >
+  Bayan is a revolutionary hybrid programming language that seamlessly
+  combines three programming paradigms in one unified syntax: Imperative
+  Programming, Object-Oriented Programming (OOP), and Logic Programming
+  (Prolog-style). It features full support for both Arabic and English
+  keywords, perfect handling of Arabic text without external libraries,
+  and modern features including async/await, generators, and decorators.
+keywords:
+  - programming-language
+  - hybrid-programming
+  - logic-programming
+  - object-oriented-programming
+  - imperative-programming
+  - arabic-language
+  - bilingual
+  - prolog
+  - python
+license: MIT
+type: software
+
