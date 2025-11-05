@@ -1,0 +1,47 @@
+# قاعدة بيانات الحروف العربية - نسخة مبسطة
+# Arabic Letters Database - Simplified Version
+
+hybrid {
+    # تعريف مخارج الحروف
+    articulation("الحلق", "throat").
+    articulation("البلعوم", "pharynx").
+    articulation("الحنك", "palate").
+    articulation("اللثة", "alveolar").
+    articulation("الأسنان", "dental").
+    articulation("الشفتان", "lips").
+    
+    # تعريف فئات الحروف
+    category("فاتحة", "opening").
+    category("قاطعة", "closing").
+    category("جارية", "flowing").
+    category("مفخمة", "emphatic").
+    category("رقيقة", "soft").
+    
+    # قاعدة للبحث عن مخرج حرف
+    find_articulation(?name, ?english) :- articulation(?name, ?english).
+    
+    # قاعدة للبحث عن فئة حرف
+    find_category(?name, ?english) :- category(?name, ?english).
+    
+    # طباعة النتائج
+    print("=== قاعدة بيانات الحروف العربية ===")
+    print("Arabic Letters Database")
+    print("")
+    print("مخارج الحروف (Letter Articulations):")
+    print("- الحلق (Throat)")
+    print("- البلعوم (Pharynx)")
+    print("- الحنك (Palate)")
+    print("- اللثة (Alveolar)")
+    print("- الأسنان (Dental)")
+    print("- الشفتان (Lips)")
+    print("")
+    print("فئات الحروف (Letter Categories):")
+    print("- فاتحة (Opening)")
+    print("- قاطعة (Closing)")
+    print("- جارية (Flowing)")
+    print("- مفخمة (Emphatic)")
+    print("- رقيقة (Soft)")
+    print("")
+    print("✅ قاعدة البيانات جاهزة للاستخدام")
+}
+

@@ -1,0 +1,173 @@
+# مثال: استخدام مديري السياق (Context Managers) في لغة البيان
+# Example: Using Context Managers in Bayan language
+
+print("=== Context Managers Examples ===")
+print()
+
+# مثال 1: فتح ملف مع with
+# Example 1: Opening file with 'with'
+print("Example 1: File handling with 'with'")
+def example_file_read(): {
+    with open("data.txt") as f: {
+        data = f.read()
+        print(data)
+    }
+    # الملف يُغلق تلقائياً هنا
+    # File is automatically closed here
+}
+
+print("Reading file with automatic cleanup")
+print()
+
+# مثال 2: with بدون as
+# Example 2: with without 'as'
+print("Example 2: Context manager without 'as'")
+def example_lock(): {
+    with acquire_lock(): {
+        # قسم حرج
+        # Critical section
+        print("Lock acquired")
+        critical_operation()
+    }
+    # القفل يُحرر تلقائياً
+    # Lock is automatically released
+}
+
+print("Using lock without variable")
+print()
+
+# مثال 3: with متداخل
+# Example 3: Nested with statements
+print("Example 3: Nested with statements")
+def copy_file(source, dest): {
+    with open(source) as src: {
+        with open(dest) as dst: {
+            data = src.read()
+            dst.write(data)
+        }
+    }
+}
+
+print("Copying file with nested with")
+print()
+
+# مثال 4: with مع معالجة الأخطاء
+# Example 4: with with error handling
+print("Example 4: with and error handling")
+def safe_file_read(filename): {
+    try: {
+        with open(filename) as f: {
+            return f.read()
+        }
+    } except: {
+        print("Error reading file")
+        return None
+    }
+}
+
+print("Safe file reading")
+print()
+
+# مثال 5: with مع قاعدة بيانات
+# Example 5: with with database
+print("Example 5: Database transaction")
+def update_database(data): {
+    with database.transaction() as tx: {
+        tx.insert("users", data)
+        tx.update("stats", count)
+        tx.commit()
+    }
+    # المعاملة تُنفذ أو تُلغى تلقائياً
+    # Transaction is committed or rolled back automatically
+}
+
+print("Database transaction with automatic commit/rollback")
+print()
+
+# مثال 6: with مع اتصال شبكة
+# Example 6: with with network connection
+print("Example 6: Network connection")
+def fetch_data(url): {
+    with create_connection(url) as conn: {
+        conn.send("GET /data")
+        response = conn.receive()
+        return response
+    }
+    # الاتصال يُغلق تلقائياً
+    # Connection is automatically closed
+}
+
+print("Network connection with automatic cleanup")
+print()
+
+# مثال 7: with مع حلقة
+# Example 7: with with loop
+print("Example 7: Processing file lines")
+def process_lines(filename): {
+    with open(filename) as f: {
+        for line in f: {
+            print(line)
+            process(line)
+        }
+    }
+}
+
+print("Processing file lines with with")
+print()
+
+# مثال 8: with مع شرط
+# Example 8: with with conditional
+print("Example 8: Conditional resource usage")
+def use_resource(condition): {
+    with get_resource() as resource: {
+        if resource.is_valid(): {
+            resource.use()
+            print("Resource used")
+        } else: {
+            print("Invalid resource")
+        }
+    }
+}
+
+print("Conditional resource usage")
+print()
+
+# مثال 9: صنف مخصص لمدير السياق
+# Example 9: Custom context manager class
+print("Example 9: Custom context manager")
+class Timer: {
+    def __init__(self): {
+        self.start_time = 0
+        self.end_time = 0
+    }
+    
+    def __enter__(self): {
+        self.start_time = time.now()
+        return self
+    }
+    
+    def __exit__(self): {
+        self.end_time = time.now()
+        elapsed = self.end_time - self.start_time
+        print(f"Elapsed time: {elapsed}")
+    }
+}
+
+def timed_operation(): {
+    with Timer() as timer: {
+        # عملية تستغرق وقتاً
+        # Time-consuming operation
+        heavy_computation()
+    }
+    # الوقت يُطبع تلقائياً
+    # Time is printed automatically
+}
+
+print("Custom timer context manager")
+print()
+
+print("=== End of Examples ===")
+print()
+print("Note: Context managers are currently parsed but not fully executed.")
+print("Full execution support with __enter__ and __exit__ will be added.")
+

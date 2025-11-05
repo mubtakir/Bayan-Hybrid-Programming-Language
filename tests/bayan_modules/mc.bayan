@@ -1,0 +1,6 @@
+class C:
+{
+    def __init__(v): { self.v = v }
+    def get(): { return self.v }
+}
+

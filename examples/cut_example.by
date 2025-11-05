@@ -1,0 +1,88 @@
+# مثال على استخدام عامل القطع (!) في لغة البيان
+# Example of using cut operator (!) in Bayan language
+
+hybrid {
+    # مثال 1: تحديد الحد الأقصى بين رقمين
+    # Example 1: Finding maximum of two numbers
+    rule max(?X, ?Y, ?X) :- ?X >= ?Y, !.
+    rule max(?X, ?Y, ?Y) :- ?X < ?Y.
+    
+    # مثال 2: تصنيف الأرقام
+    # Example 2: Classifying numbers
+    rule classify(?X, "positive") :- ?X > 0, !.
+    rule classify(?X, "zero") :- ?X == 0, !.
+    rule classify(?X, "negative") :- ?X < 0.
+    
+    # مثال 3: البحث في القائمة (مع القطع لإيقاف البحث بعد الإيجاد)
+    # Example 3: List membership (with cut to stop after finding)
+    rule member(?H, [?H|?T]) :- !.
+    rule member(?X, [?H|?T]) :- member(?X, ?T).
+    
+    # مثال 4: حساب العاملي (factorial) مع القطع
+    # Example 4: Factorial with cut
+    fact factorial(0, 1).
+    rule factorial(?N, ?F) :- 
+        ?N > 0,
+        !,
+        ?N1 is ?N - 1,
+        factorial(?N1, ?F1),
+        ?F is ?N * ?F1.
+    
+    # مثال 5: الحد الأدنى بين رقمين
+    # Example 5: Finding minimum of two numbers
+    rule min(?X, ?Y, ?X) :- ?X <= ?Y, !.
+    rule min(?X, ?Y, ?Y) :- ?X > ?Y.
+    
+    # مثال 6: التحقق من نوع البيانات
+    # Example 6: Type checking
+    rule is_positive(?X) :- ?X > 0, !.
+    rule is_negative(?X) :- ?X < 0, !.
+    rule is_zero(?X) :- ?X == 0.
+}
+
+# استخدام الأمثلة
+# Using the examples
+
+# البحث عن الحد الأقصى
+# Finding maximum
+query max(5, 3, ?Result).
+# النتيجة: ?Result = 5
+
+query max(2, 8, ?Result).
+# النتيجة: ?Result = 8
+
+# تصنيف الأرقام
+# Classifying numbers
+query classify(10, ?Type).
+# النتيجة: ?Type = "positive"
+
+query classify(0, ?Type).
+# النتيجة: ?Type = "zero"
+
+query classify(-5, ?Type).
+# النتيجة: ?Type = "negative"
+
+# البحث في القائمة
+# List membership
+query member(3, [1, 2, 3, 4, 5]).
+# النتيجة: true
+
+query member(10, [1, 2, 3, 4, 5]).
+# النتيجة: false
+
+# حساب العاملي
+# Factorial
+query factorial(5, ?F).
+# النتيجة: ?F = 120
+
+query factorial(0, ?F).
+# النتيجة: ?F = 1
+
+# الحد الأدنى
+# Minimum
+query min(5, 3, ?Result).
+# النتيجة: ?Result = 3
+
+query min(2, 8, ?Result).
+# النتيجة: ?Result = 2
+

@@ -1,0 +1,20 @@
+# اختبارات تراكيب الفهم للقوائم (List Comprehensions)
+
+# [x * x for x in range(5)]
+sq = [x * x for x in range(5)]
+print(sq)
+
+# مع شرط if
+evens = [x for x in range(10) if x % 2 == 0]
+print(evens)
+
+# داخل دالة
+
+def make_list(n):{
+    return [i + 1 for i in range(n) if i % 2 == 1]
+}
+
+print(make_list(8))
+
+print("✅ اختبارات تراكيب الفهم انتهت")
+

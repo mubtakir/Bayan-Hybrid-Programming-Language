@@ -1,0 +1,36 @@
+# مثال: استخدام نمط القوائم [H|T] لتعريف member
+# Example: Using list pattern [H|T] to define member predicate
+
+hybrid {
+    # القاعدة الأولى: العنصر موجود إذا كان رأس القائمة
+    # First rule: Element is member if it's the head
+    rule member(?X, [?X|?T]).
+    
+    # القاعدة الثانية: العنصر موجود إذا كان في الذيل
+    # Second rule: Element is member if it's in the tail
+    rule member(?X, [?H|?T]) :- member(?X, ?T).
+}
+
+# اختبار member
+# Test member
+print("Testing member predicate with [H|T] pattern:")
+print("=" * 50)
+
+results = query member(?X, [1, 2, 3, 4, 5])?
+print("Query: member(?X, [1, 2, 3, 4, 5])")
+print("Results:", results)
+print()
+
+# اختبار مع قائمة نصوص
+# Test with string list
+results2 = query member(?Item, ["تفاح", "موز", "برتقال"])?
+print("Query: member(?Item, ['تفاح', 'موز', 'برتقال'])")
+print("Results:", results2)
+print()
+
+# اختبار عضوية عنصر محدد
+# Test membership of specific element
+results3 = query member(3, [1, 2, 3, 4, 5])?
+print("Query: member(3, [1, 2, 3, 4, 5])")
+print("Results:", results3)
+

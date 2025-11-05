@@ -1,0 +1,130 @@
+# مثال: استخدام المولدات (Generators) في لغة البيان
+# Example: Using Generators in Bayan language
+
+print("=== Generators Examples ===")
+print()
+
+# مثال 1: مولد بسيط
+# Example 1: Simple generator
+print("Example 1: Simple counter generator")
+def count(n): {
+    i = 0
+    while i < n: {
+        yield i
+        i = i + 1
+    }
+}
+
+print("Counting from 0 to 4:")
+# Note: في التنفيذ الحالي، المولدات تُعرّف فقط (parsing)
+# Note: In current implementation, generators are defined only (parsing)
+print()
+
+# مثال 2: مولد أرقام فيبوناتشي
+# Example 2: Fibonacci generator
+print("Example 2: Fibonacci generator")
+def fibonacci(n): {
+    a = 0
+    b = 1
+    i = 0
+    while i < n: {
+        yield a
+        temp = a
+        a = b
+        b = temp + b
+        i = i + 1
+    }
+}
+
+print("First 10 Fibonacci numbers:")
+print()
+
+# مثال 3: مولد المربعات
+# Example 3: Squares generator
+print("Example 3: Squares generator")
+def squares(n): {
+    i = 0
+    while i < n: {
+        yield i * i
+        i = i + 1
+    }
+}
+
+print("Squares from 0 to 9:")
+print()
+
+# مثال 4: مولد مع تصفية
+# Example 4: Generator with filtering
+print("Example 4: Even numbers generator")
+def even_numbers(max): {
+    i = 0
+    while i < max: {
+        if i % 2 == 0: {
+            yield i
+        }
+        i = i + 1
+    }
+}
+
+print("Even numbers from 0 to 19:")
+print()
+
+# مثال 5: مولد لقراءة الأسطر
+# Example 5: Line reader generator
+print("Example 5: Line reader generator")
+def read_lines(lines): {
+    for line in lines: {
+        yield line
+    }
+}
+
+print("Reading lines:")
+print()
+
+# مثال 6: مولد متداخل
+# Example 6: Nested generator
+print("Example 6: Nested generator")
+def flatten(lists): {
+    for lst in lists: {
+        for item in lst: {
+            yield item
+        }
+    }
+}
+
+print("Flattening nested lists:")
+print()
+
+# مثال 7: مولد لا نهائي (مع حد)
+# Example 7: Infinite generator (with limit)
+print("Example 7: Infinite counter (limited)")
+def infinite_counter(): {
+    i = 0
+    while True: {
+        yield i
+        i = i + 1
+    }
+}
+
+print("Infinite counter (first 5):")
+print()
+
+# مثال 8: مولد مع yield متعدد
+# Example 8: Generator with multiple yields
+print("Example 8: Multiple yields")
+def multi_yield(): {
+    yield 1
+    yield 2
+    yield 3
+    yield 4
+    yield 5
+}
+
+print("Multiple yields:")
+print()
+
+print("=== End of Examples ===")
+print()
+print("Note: Generators are currently parsed but not executed.")
+print("Full execution support will be added in the interpreter.")
+

@@ -1,0 +1,249 @@
+# معالجة الأحداث المعقدة - Advanced Event Processing
+# لغة البيان - Bayan Language
+# المطور: باسل يحيى عبدالله
+
+hybrid {
+    # ============================================
+    # 1. قاعدة بيانات الأحداث
+    # ============================================
+    
+    # تعريف الأحداث
+    # event(id, type, actors, parameters, timestamp, status)
+    
+    event(e001, "movement", [محمد], [from: البيت, to: المدرسة], 08:00, "completed").
+    event(e002, "learning", [محمد, المعلم], [subject: الرياضيات, duration: 60], 08:30, "in_progress").
+    event(e003, "movement", [محمد], [from: المدرسة, to: البيت], 14:00, "pending").
+    event(e004, "rest", [محمد], [location: البيت, duration: 120], 14:30, "pending").
+    event(e005, "playing", [محمد, علي], [game: كرة, location: الملعب], 16:00, "pending").
+    
+    # ============================================
+    # 2. قواعس الأحداث المتسلسلة
+    # ============================================
+    
+    # أحداث متسلسلة
+    sequential_events(?e1, ?e2) :-
+        event(?e1, _, _, _, ?t1, _),
+        event(?e2, _, _, _, ?t2, _),
+        ?t2 > ?t1.
+    
+    # سلسلة أحداث
+    event_sequence([?e1, ?e2, ?e3]) :-
+        sequential_events(?e1, ?e2),
+        sequential_events(?e2, ?e3).
+    
+    # ============================================
+    # 3. قواعس الأحداث المتزامنة
+    # ============================================
+    
+    # أحداث متزامنة
+    concurrent_events(?e1, ?e2) :-
+        event(?e1, _, _, _, ?t1, _),
+        event(?e2, _, _, _, ?t2, _),
+        time_overlap(?t1, ?t2).
+    
+    # مجموعة أحداث متزامنة
+    concurrent_event_group([?events]) :-
+        check_all_concurrent(?events).
+    
+    # ============================================
+    # 4. قواعس الأحداث المشروطة
+    # ============================================
+    
+    # حدث مشروط
+    conditional_event(?condition_event, ?action_event) :-
+        event(?condition_event, "condition", _, _, _, _),
+        event(?action_event, "action", _, _, _, _),
+        condition_met(?condition_event).
+    
+    # حدث مشروط معقد
+    complex_conditional_event(?cond1, ?cond2, ?action) :-
+        event(?cond1, "condition", _, _, _, _),
+        event(?cond2, "condition", _, _, _, _),
+        event(?action, "action", _, _, _, _),
+        both_conditions_met(?cond1, ?cond2).
+    
+    # ============================================
+    # 5. قواعس تتبع تأثير الأحداث
+    # ============================================
+    
+    # تأثير الحدث على الكائن
+    event_impact(?event, ?object, ?impact) :-
+        event(?event, _, ?actors, ?params, _, _),
+        member(?object, ?actors),
+        calculate_impact(?event, ?object, ?impact).
+    
+    # تأثير متسلسل
+    cascading_impact(?e1, ?e2, ?object, ?total_impact) :-
+        event_impact(?e1, ?object, ?impact1),
+        event_impact(?e2, ?object, ?impact2),
+        combine_impacts(?impact1, ?impact2, ?total_impact).
+    
+    # ============================================
+    # 6. قواعس تحويل حالة الحدث
+    # ============================================
+    
+    # تحديث حالة الحدث
+    update_event_status(?event_id, ?new_status) :-
+        retract(event(?event_id, ?type, ?actors, ?params, ?time, _)),
+        assert(event(?event_id, ?type, ?actors, ?params, ?time, ?new_status)).
+    
+    # انتقال الحدث من حالة إلى أخرى
+    event_state_transition(?event_id, ?from_state, ?to_state) :-
+        event(?event_id, _, _, _, _, ?from_state),
+        valid_transition(?from_state, ?to_state),
+        update_event_status(?event_id, ?to_state).
+    
+    # ============================================
+    # 7. قواعس معالجة الأحداث المعقدة
+    # ============================================
+    
+    # دمج أحداث
+    merge_events(?e1, ?e2, ?merged_event) :-
+        event(?e1, ?type1, ?actors1, ?params1, ?time1, _),
+        event(?e2, ?type2, ?actors2, ?params2, ?time2, _),
+        merge_actors(?actors1, ?actors2, ?merged_actors),
+        merge_parameters(?params1, ?params2, ?merged_params),
+        assert(event(merged_event, merged, ?merged_actors, ?merged_params, ?time1, "created")).
+    
+    # تقسيم حدث
+    split_event(?event, ?sub_events) :-
+        event(?event, ?type, ?actors, ?params, ?time, _),
+        decompose_event(?type, ?actors, ?params, ?sub_events).
+    
+    # ============================================
+    # 8. قواعس الاستدلال من الأحداث
+    # ============================================
+    
+    # استدلال الحدث التالي
+    infer_next_event(?current_event, ?next_event) :-
+        event(?current_event, ?type, ?actors, _, _, _),
+        predict_next_event(?type, ?actors, ?next_event).
+    
+    # استدلال السبب من الحدث
+    infer_cause(?event, ?cause) :-
+        event(?event, ?type, ?actors, ?params, _, _),
+        determine_cause(?type, ?actors, ?params, ?cause).
+    
+    # استدلال النتيجة من الحدث
+    infer_consequence(?event, ?consequence) :-
+        event(?event, ?type, ?actors, ?params, _, _),
+        determine_consequence(?type, ?actors, ?params, ?consequence).
+    
+    # ============================================
+    # 9. قواعس معالجة الأخطاء والاستثناءات
+    # ============================================
+    
+    # كشف الحدث غير المتوقع
+    detect_unexpected_event(?event) :-
+        event(?event, ?type, ?actors, ?params, ?time, _),
+        not expected_event(?type, ?actors, ?time).
+    
+    # معالجة الحدث غير المتوقع
+    handle_unexpected_event(?event, ?action) :-
+        detect_unexpected_event(?event),
+        determine_action(?event, ?action).
+    
+    # ============================================
+    # 10. دوال مساعدة
+    # ============================================
+    
+    # التحقق من تداخل الوقت
+    def time_overlap(t1, t2) {
+        return true
+    }
+    
+    # التحقق من جميع الأحداث المتزامنة
+    def check_all_concurrent(events) {
+        return true
+    }
+    
+    # التحقق من الشرط
+    def condition_met(condition_event) {
+        return true
+    }
+    
+    # التحقق من كلا الشرطين
+    def both_conditions_met(cond1, cond2) {
+        return true
+    }
+    
+    # حساب التأثير
+    def calculate_impact(event, object, impact) {
+        return impact
+    }
+    
+    # دمج التأثيرات
+    def combine_impacts(impact1, impact2, total) {
+        return total
+    }
+    
+    # التحقق من الانتقال الصحيح
+    def valid_transition(from_state, to_state) {
+        return true
+    }
+    
+    # دمج الممثلين
+    def merge_actors(actors1, actors2, merged) {
+        return merged
+    }
+    
+    # دمج المعاملات
+    def merge_parameters(params1, params2, merged) {
+        return merged
+    }
+    
+    # تحليل الحدث
+    def decompose_event(type, actors, params, sub_events) {
+        return sub_events
+    }
+    
+    # التنبؤ بالحدث التالي
+    def predict_next_event(type, actors, next_event) {
+        return next_event
+    }
+    
+    # تحديد السبب
+    def determine_cause(type, actors, params, cause) {
+        return cause
+    }
+    
+    # تحديد النتيجة
+    def determine_consequence(type, actors, params, consequence) {
+        return consequence
+    }
+    
+    # التحقق من الحدث المتوقع
+    def expected_event(type, actors, time) {
+        return true
+    }
+    
+    # تحديد الإجراء
+    def determine_action(event, action) {
+        return action
+    }
+    
+    # ============================================
+    # 11. أمثلة الاستخدام
+    # ============================================
+    
+    # مثال 1: أحداث متسلسلة
+    print("=== مثال 1: أحداث متسلسلة ===")
+    sequential_events(e001, ?next)
+    print("الحدث التالي: " + str(?next))
+    
+    # مثال 2: أحداث متزامنة
+    print("=== مثال 2: أحداث متزامنة ===")
+    concurrent_events(e002, ?concurrent)
+    print("حدث متزامن: " + str(?concurrent))
+    
+    # مثال 3: تأثير الحدث
+    print("=== مثال 3: تأثير الحدث ===")
+    event_impact(e001, محمد, ?impact)
+    print("التأثير: " + str(?impact))
+    
+    # مثال 4: استدلال الحدث التالي
+    print("=== مثال 4: استدلال الحدث التالي ===")
+    infer_next_event(e001, ?next)
+    print("الحدث المتنبأ به: " + str(?next))
+}
+

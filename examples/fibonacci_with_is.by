@@ -1,0 +1,34 @@
+# مثال: حساب فيبوناتشي باستخدام عامل is
+# Example: Fibonacci calculation using 'is' operator
+
+hybrid {
+    # الحالات الأساسية
+    # Base cases
+    fact fib(0, 0).
+    fact fib(1, 1).
+    
+    # الحالة العودية: fib(N) = fib(N-1) + fib(N-2)
+    # Recursive case: fib(N) = fib(N-1) + fib(N-2)
+    rule fib(?N, ?F) :- 
+        ?N > 1,
+        ?N1 is ?N - 1,
+        ?N2 is ?N - 2,
+        fib(?N1, ?F1),
+        fib(?N2, ?F2),
+        ?F is ?F1 + ?F2.
+}
+
+# اختبار fibonacci
+# Test fibonacci
+print("Testing Fibonacci with 'is' operator:")
+print("=" * 50)
+
+# حساب أول 10 أرقام فيبوناتشي
+# Calculate first 10 Fibonacci numbers
+for i in range(10) {
+    results = query fib(i, ?F)?
+    if results {
+        print(f"fib({i}) = {results[0]['F']}")
+    }
+}
+

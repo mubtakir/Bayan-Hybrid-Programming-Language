@@ -1,0 +1,185 @@
+# Demo of New Features in Bayan Language
+# عرض توضيحي للميزات الجديدة في لغة البيان
+
+hybrid {
+    print("=== Bayan Language - New Features Demo ===")
+    print("=== عرض الميزات الجديدة في لغة البيان ===")
+    print("")
+    
+    # ========================================================================
+    # 1. List Slicing (تقطيع القوائم)
+    # ========================================================================
+    print("1. List Slicing / تقطيع القوائم")
+    print("-" * 40)
+    
+    numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    print("Original list: " + str(numbers))
+    
+    # Basic slicing
+    slice1 = numbers[2:5]
+    print("numbers[2:5] = " + str(slice1))
+    
+    # Start only
+    slice2 = numbers[7:]
+    print("numbers[7:] = " + str(slice2))
+    
+    # End only
+    slice3 = numbers[:3]
+    print("numbers[:3] = " + str(slice3))
+    
+    # With step
+    slice4 = numbers[::2]
+    print("numbers[::2] = " + str(slice4))
+    
+    # Odd numbers
+    slice5 = numbers[1::2]
+    print("numbers[1::2] = " + str(slice5))
+    
+    print("")
+    
+    # ========================================================================
+    # 2. Tuples (المجموعات الثابتة)
+    # ========================================================================
+    print("2. Tuples / المجموعات الثابتة")
+    print("-" * 40)
+    
+    # Create tuple
+    point = (10, 20)
+    print("point = " + str(point))
+    print("point[0] = " + str(point[0]))
+    print("point[1] = " + str(point[1]))
+    
+    # Empty tuple
+    empty = ()
+    print("empty tuple = " + str(empty))
+    
+    # Single element tuple
+    single = (42,)
+    print("single element tuple = " + str(single))
+    
+    # Multiple elements
+    coords = (1, 2, 3)
+    print("3D coordinates = " + str(coords))
+    
+    print("")
+    
+    # ========================================================================
+    # 3. Sets (المجموعات الفريدة)
+    # ========================================================================
+    print("3. Sets / المجموعات الفريدة")
+    print("-" * 40)
+    
+    # Create set
+    unique_numbers = {1, 2, 3, 4, 5}
+    print("unique_numbers = " + str(unique_numbers))
+    
+    # Sets remove duplicates automatically
+    duplicates = {1, 2, 2, 3, 3, 3}
+    print("duplicates = {1, 2, 2, 3, 3, 3}")
+    print("result = " + str(duplicates))
+    
+    print("")
+    
+    # ========================================================================
+    # 4. Combining Features (دمج الميزات)
+    # ========================================================================
+    print("4. Combining Features / دمج الميزات")
+    print("-" * 40)
+    
+    # List of tuples
+    points = [(0, 0), (1, 1), (2, 2)]
+    print("List of points: " + str(points))
+    
+    # Slice list of tuples
+    first_two = points[:2]
+    print("First two points: " + str(first_two))
+    
+    # Set of numbers from list
+    nums = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
+    unique_set = {1, 2, 3, 4}
+    print("Original: " + str(nums))
+    print("Unique set: " + str(unique_set))
+    
+    print("")
+    
+    # ========================================================================
+    # 5. Practical Examples (أمثلة عملية)
+    # ========================================================================
+    print("5. Practical Examples / أمثلة عملية")
+    print("-" * 40)
+    
+    # Example 1: Get even numbers
+    all_nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    even_nums = all_nums[1::2]
+    print("Even numbers: " + str(even_nums))
+    
+    # Example 2: Reverse a list
+    original = [1, 2, 3, 4, 5]
+    print("Original: " + str(original))
+    print("Reversed (manual): " + str([5, 4, 3, 2, 1]))
+    
+    # Example 3: Check if all elements are true
+    lst1 = [True, True, True]
+    all_true = True
+    for item in lst1: {
+        if not item: {
+            all_true = False
+        }
+    }
+    print("All true in [True, True, True]: " + str(all_true))
+    
+    # Example 4: Check if any element is true
+    lst2 = [False, True, False]
+    any_true = False
+    for item in lst2: {
+        if item: {
+            any_true = True
+        }
+    }
+    print("Any true in [False, True, False]: " + str(any_true))
+    
+    # Example 5: Flatten nested list
+    nested = [[1, 2], [3, 4], [5, 6]]
+    flat = []
+    for sublist in nested: {
+        for item in sublist: {
+            flat = flat + [item]
+        }
+    }
+    print("Nested: " + str(nested))
+    print("Flattened: " + str(flat))
+    
+    print("")
+    
+    # ========================================================================
+    # 6. Logical Programming Features (ميزات البرمجة المنطقية)
+    # ========================================================================
+    print("6. Logical Programming / البرمجة المنطقية")
+    print("-" * 40)
+    
+    # Define facts (automatic recognition - no 'fact' keyword needed)
+    parent(tom, bob).
+    parent(tom, liz).
+    parent(bob, ann).
+    parent(bob, pat).
+    parent(pat, jim).
+    
+    # Define rules (automatic recognition - no 'rule' keyword needed)
+    grandparent(?X, ?Z) :- parent(?X, ?Y), parent(?Y, ?Z).
+    
+    # Query facts
+    print("Query: parent(tom, bob)")
+    query parent(tom, bob).
+    
+    print("")
+    print("Query: parent(tom, ?X) - Find all children of tom")
+    query parent(tom, ?X).
+    
+    print("")
+    print("Query: grandparent(?X, ?Y) - Find all grandparent relationships")
+    query grandparent(?X, ?Y).
+    
+    print("")
+    print("=== Demo Complete / انتهى العرض ===")
+}
+

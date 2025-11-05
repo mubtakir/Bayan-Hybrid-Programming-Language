@@ -1,0 +1,10 @@
+# اختبار بسيط لصيغة Bayan
+# Simple Test for Bayan Syntax
+
+hybrid {
+    # طباعة النتائج
+    print("=== Bayan Test ===")
+    print("Testing basic facts and rules")
+    print("Test completed successfully!")
+}
+

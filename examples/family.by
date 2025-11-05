@@ -1,0 +1,40 @@
+# Family Relations Example
+# مثال على العلاقات العائلية
+
+hybrid {
+    # Facts - الحقائق
+    parent("خالد", "أحمد").
+    parent("فاطمة", "أحمد").
+    parent("أحمد", "محمد").
+    parent("أحمد", "سارة").
+    parent("محمد", "علي").
+    parent("محمد", "فاطمة_الصغرى").
+    
+    # Rules - القواعد
+    # Grandparent rule
+    grandparent(?X, ?Z) :- parent(?X, ?Y), parent(?Y, ?Z).
+    
+    # Sibling rule
+    sibling(?X, ?Y) :- parent(?P, ?X), parent(?P, ?Y).
+    
+    # Ancestor rule
+    ancestor(?X, ?Y) :- parent(?X, ?Y).
+    ancestor(?X, ?Z) :- parent(?X, ?Y), ancestor(?Y, ?Z).
+    
+    # Traditional code
+    print("=== Family Relations ===")
+    print("")
+
+    # Query grandparents
+    print("Grandparents of محمد:")
+    query grandparent(?GP, "محمد").
+
+    print("")
+    print("Siblings of أحمد:")
+    query sibling("أحمد", ?SIB).
+
+    print("")
+    print("Ancestors of علي:")
+    query ancestor(?ANC, "علي").
+}
+

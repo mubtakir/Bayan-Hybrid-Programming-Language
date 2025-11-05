@@ -1,0 +1,82 @@
+# مثال: استخدام async/await في لغة البيان
+# Example: Using async/await in Bayan language
+
+# دالة async بسيطة
+# Simple async function
+async def fetch_data(url): {
+    print(f"Fetching data from {url}...")
+    return f"Data from {url}"
+}
+
+# دالة async تستدعي دالة async أخرى
+# Async function calling another async function
+async def process_data(url): {
+    print(f"Processing {url}...")
+    data = await fetch_data(url)
+    print(f"Received: {data}")
+    return data
+}
+
+# دالة async مع معالجة أخطاء
+# Async function with error handling
+async def fetch_safe(url): {
+    try: {
+        data = await fetch_data(url)
+        return data
+    } except: {
+        print("Error fetching data")
+        return None
+    }
+}
+
+# دالة async تعالج قائمة من URLs
+# Async function processing a list of URLs
+async def fetch_all(urls): {
+    results = []
+    for url in urls: {
+        data = await fetch_data(url)
+        results.append(data)
+    }
+    return results
+}
+
+print("=== Async/Await Examples ===")
+print()
+
+# مثال 1: استدعاء دالة async بسيطة
+# Example 1: Simple async function call
+print("Example 1: Simple async function")
+# Note: في التنفيذ الحالي، الدوال async تعمل بشكل متزامن
+# Note: In current implementation, async functions work synchronously
+print()
+
+# مثال 2: دوال async متداخلة
+# Example 2: Nested async functions
+print("Example 2: Nested async functions")
+async def outer(): {
+    print("Outer function started")
+    
+    async def inner(): {
+        print("Inner function executed")
+        return 42
+    }
+    
+    result = await inner()
+    print(f"Inner result: {result}")
+    return result
+}
+print()
+
+# مثال 3: async مع حلقات
+# Example 3: async with loops
+print("Example 3: Async with loops")
+async def count_async(n): {
+    for i in range(n): {
+        print(f"Count: {i}")
+    }
+    return n
+}
+print()
+
+print("=== End of Examples ===")
+

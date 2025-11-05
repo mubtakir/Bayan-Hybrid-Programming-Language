@@ -1,0 +1,29 @@
+# تكامل بيان مع بايثون — استيراد موديول محلي + مكتبات قياسية
+
+print("[1] استيراد موديول بايثون محلي myutils\n")
+import myutils
+print(myutils.hello("Bayan"))
+
+print("\n[2] دالة بايثون داخل حلقة بيان — متتاليات فيبوناتشي\n")
+for i in [0, 1, 2, 3, 4, 5, 6]:
+{
+    print(myutils.fib(i))
+}
+
+print("\n[3] استيراد مكتبة قياسية — random\n")
+import random
+print(random.choice(["بيان", "Python", "Logic"]))
+
+print("\n[4] منطق هجيني في نفس الملف\n")
+hybrid
+{
+    fact color(apple, red).
+    fact color(banana, yellow).
+    rule tasty(X) :- color(X, red).
+
+    print("tasty(?X):")
+    query tasty(?X).
+}
+
+print("\nتم.")
+

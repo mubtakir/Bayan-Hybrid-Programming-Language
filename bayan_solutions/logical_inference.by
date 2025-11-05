@@ -1,0 +1,251 @@
+# نظام الاستدلال المنطقي المتقدم - Advanced Logical Inference System
+# لغة البيان - Bayan Language
+# المطور: باسل يحيى عبدالله
+
+hybrid {
+    # ============================================
+    # 1. قاعدة البيانات الأساسية
+    # ============================================
+    
+    # حقائق عن العلاقات
+    parent("أحمد", "محمد").
+    parent("محمد", "علي").
+    parent("علي", "سارة").
+    parent("فاطمة", "محمد").
+    parent("محمد", "ليلى").
+    
+    # حقائق عن الخصائص
+    person("أحمد").
+    person("محمد").
+    person("علي").
+    person("سارة").
+    person("فاطمة").
+    person("ليلى").
+    
+    # حقائق عن الأماكن
+    location("المدرسة").
+    location("البيت").
+    location("المكتبة").
+    
+    # حقائق عن الأحداث
+    event("ذهب", "movement").
+    event("عاد", "return").
+    event("تعلم", "learning").
+    event("لعب", "playing").
+    
+    # ============================================
+    # 2. قواعس الاستدلال الأساسية
+    # ============================================
+    
+    # قاعدة الجد/الجدة
+    grandparent(?X, ?Z) :- parent(?X, ?Y), parent(?Y, ?Z).
+    
+    # قاعدة السلف
+    ancestor(?X, ?Z) :- parent(?X, ?Z).
+    ancestor(?X, ?Z) :- parent(?X, ?Y), ancestor(?Y, ?Z).
+    
+    # قاعدة الأخ/الأخت
+    sibling(?X, ?Y) :- parent(?P, ?X), parent(?P, ?Y), ?X != ?Y.
+    
+    # قاعدة العم/العمة
+    uncle_aunt(?X, ?Z) :- sibling(?X, ?Y), parent(?Y, ?Z).
+    
+    # قاعدة الابن/البنت
+    child(?X, ?Y) :- parent(?Y, ?X).
+    
+    # ============================================
+    # 3. قواعس الاستدلال المتقدمة
+    # ============================================
+    
+    # استدلال العلاقة العامة
+    relationship(?X, ?Y, ?rel) :-
+        (parent(?X, ?Y) -> ?rel = "والد/والدة");
+        (child(?X, ?Y) -> ?rel = "ابن/بنت");
+        (grandparent(?X, ?Y) -> ?rel = "جد/جدة");
+        (sibling(?X, ?Y) -> ?rel = "أخ/أخت");
+        (uncle_aunt(?X, ?Y) -> ?rel = "عم/عمة");
+        (ancestor(?X, ?Y) -> ?rel = "سلف").
+    
+    # استدلال متعدد المستويات
+    deep_relationship(?X, ?Y, ?depth, ?rel) :-
+        ancestor(?X, ?Y),
+        calculate_depth(?X, ?Y, ?depth),
+        determine_relationship(?depth, ?rel).
+    
+    # ============================================
+    # 4. قواعس الاستدلال الاستقرائي
+    # ============================================
+    
+    # استدلال من أمثلة
+    infer_pattern(?examples, ?pattern) :-
+        analyze_examples(?examples, ?pattern).
+    
+    # استدلال من حالات خاصة إلى عامة
+    generalize(?specific_cases, ?general_rule) :-
+        extract_common_properties(?specific_cases, ?properties),
+        formulate_rule(?properties, ?general_rule).
+    
+    # ============================================
+    # 5. قواعس الاستدلال القياسي
+    # ============================================
+    
+    # استدلال بالقياس
+    analogical_inference(?source, ?target, ?property, ?result) :-
+        has_property(?source, ?property),
+        similar(?source, ?target),
+        infer_property(?target, ?property, ?result).
+    
+    # ============================================
+    # 6. قواعس معالجة التناقضات
+    # ============================================
+    
+    # كشف التناقض
+    detect_contradiction(?fact1, ?fact2) :-
+        contradicts(?fact1, ?fact2).
+    
+    # حل التناقض
+    resolve_contradiction(?fact1, ?fact2, ?resolution) :-
+        detect_contradiction(?fact1, ?fact2),
+        find_resolution(?fact1, ?fact2, ?resolution).
+    
+    # ============================================
+    # 7. قواعس الاستدلال المشروط
+    # ============================================
+    
+    # استدلال مشروط
+    conditional_inference(?condition, ?then_fact, ?else_fact, ?result) :-
+        (evaluate_condition(?condition) ->
+            ?result = ?then_fact
+        ;
+            ?result = ?else_fact
+        ).
+    
+    # استدلال متسلسل
+    chained_inference(?fact1, ?fact2, ?fact3, ?result) :-
+        infer_from(?fact1, ?intermediate),
+        infer_from(?intermediate, ?fact2),
+        infer_from(?fact2, ?fact3),
+        infer_from(?fact3, ?result).
+    
+    # ============================================
+    # 8. قواعس الاستدلال المتوازي
+    # ============================================
+    
+    # استدلال متوازي من عدة حقائق
+    parallel_inference([?facts], ?combined_result) :-
+        infer_all(?facts, ?results),
+        combine_results(?results, ?combined_result).
+    
+    # ============================================
+    # 9. قواعس الاستدلال الاحتمالي
+    # ============================================
+    
+    # استدلال احتمالي
+    probabilistic_inference(?fact, ?probability, ?result) :-
+        calculate_probability(?fact, ?probability),
+        determine_result(?probability, ?result).
+    
+    # ============================================
+    # 10. دوال مساعدة
+    # ============================================
+    
+    # حساب العمق
+    def calculate_depth(X, Y, depth) {
+        return depth
+    }
+    
+    # تحديد العلاقة من العمق
+    def determine_relationship(depth, rel) {
+        return rel
+    }
+    
+    # تحليل الأمثلة
+    def analyze_examples(examples, pattern) {
+        return pattern
+    }
+    
+    # استخراج الخصائص المشتركة
+    def extract_common_properties(cases, properties) {
+        return properties
+    }
+    
+    # صياغة القاعدة
+    def formulate_rule(properties, rule) {
+        return rule
+    }
+    
+    # التحقق من التشابه
+    def similar(source, target) {
+        return true
+    }
+    
+    # استدلال الخاصية
+    def infer_property(target, property, result) {
+        return result
+    }
+    
+    # التحقق من التناقض
+    def contradicts(fact1, fact2) {
+        return false
+    }
+    
+    # إيجاد الحل
+    def find_resolution(fact1, fact2, resolution) {
+        return resolution
+    }
+    
+    # تقييم الشرط
+    def evaluate_condition(condition) {
+        return true
+    }
+    
+    # الاستدلال من حقيقة
+    def infer_from(fact, result) {
+        return result
+    }
+    
+    # الاستدلال من جميع الحقائق
+    def infer_all(facts, results) {
+        return results
+    }
+    
+    # دمج النتائج
+    def combine_results(results, combined) {
+        return combined
+    }
+    
+    # حساب الاحتمالية
+    def calculate_probability(fact, probability) {
+        return probability
+    }
+    
+    # تحديد النتيجة من الاحتمالية
+    def determine_result(probability, result) {
+        return result
+    }
+    
+    # ============================================
+    # 11. أمثلة الاستخدام
+    # ============================================
+    
+    # مثال 1: استدلال الجد
+    print("=== مثال 1: استدلال الجد ===")
+    grandparent("أحمد", ?grandchild)
+    print("أحفاد أحمد: " + str(?grandchild))
+    
+    # مثال 2: استدلال السلف
+    print("=== مثال 2: استدلال السلف ===")
+    ancestor("أحمد", ?descendant)
+    print("أحفاد أحمد (جميع المستويات): " + str(?descendant))
+    
+    # مثال 3: استدلال العلاقة
+    print("=== مثال 3: استدلال العلاقة ===")
+    relationship("أحمد", "علي", ?rel)
+    print("العلاقة بين أحمد وعلي: " + str(?rel))
+    
+    # مثال 4: استدلال متعدد المستويات
+    print("=== مثال 4: استدلال متعدد المستويات ===")
+    deep_relationship("أحمد", "سارة", ?depth, ?rel)
+    print("العمق: " + str(?depth) + ", العلاقة: " + str(?rel))
+}
+

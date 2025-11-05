@@ -1,0 +1,390 @@
+# قواعد الاستدلال المتقدم - Advanced Inference Rules
+# لغة البيان - Bayan Language
+# نظام بصيرة AI - Baserah AI System
+# المطور: باسل يحيى عبدالله
+
+hybrid {
+    # ============================================
+    # 1. أنماط الاستدلال الأساسية
+    # ============================================
+    
+    # أنماط الاستدلال
+    inference_mode("deductive", "استنتاجي", "من العام إلى الخاص").
+    inference_mode("inductive", "استقرائي", "من الخاص إلى العام").
+    inference_mode("abductive", "افتراضي", "أفضل تفسير").
+    inference_mode("analogical", "قياسي", "بالمقارنة والتشابه").
+    
+    # ============================================
+    # 2. قواعد الاستدلال الاستنتاجي (Deductive)
+    # ============================================
+    
+    # قاعدة: إذا كان A يؤدي إلى B، وA صحيح، فإن B صحيح
+    deductive_rule("modus_ponens") :-
+        implies(?A, ?B),
+        fact(?A),
+        conclude(?B).
+    
+    # قاعدة: إذا كان A يؤدي إلى B، وB خاطئ، فإن A خاطئ
+    deductive_rule("modus_tollens") :-
+        implies(?A, ?B),
+        not(fact(?B)),
+        conclude(not(?A)).
+    
+    # قاعدة: إذا كان A يؤدي إلى B، وB يؤدي إلى C، فإن A يؤدي إلى C
+    deductive_rule("hypothetical_syllogism") :-
+        implies(?A, ?B),
+        implies(?B, ?C),
+        conclude(implies(?A, ?C)).
+    
+    # قاعدة: إذا كان A أو B صحيح، وA خاطئ، فإن B صحيح
+    deductive_rule("disjunctive_syllogism") :-
+        or(?A, ?B),
+        not(fact(?A)),
+        conclude(?B).
+    
+    # ============================================
+    # 3. قواعد الاستدلال الاستقرائي (Inductive)
+    # ============================================
+    
+    # استقراء نمط من أمثلة
+    inductive_pattern(?pattern, ?confidence) :-
+        collect_examples(?examples),
+        find_common_pattern(?examples, ?pattern),
+        calculate_confidence(?examples, ?pattern, ?confidence).
+    
+    # تعميم من حالات خاصة
+    generalize(?general_rule, ?confidence) :-
+        specific_cases(?cases),
+        all_satisfy(?cases, ?property),
+        create_general_rule(?property, ?general_rule),
+        confidence_from_cases(?cases, ?confidence).
+    
+    # استقراء علاقة سببية
+    causal_relationship(?cause, ?effect, ?strength) :-
+        observed_pairs(?pairs),
+        correlation(?pairs, ?cause, ?effect, ?corr),
+        temporal_precedence(?pairs, ?cause, ?effect),
+        calculate_causal_strength(?corr, ?strength).
+    
+    # ============================================
+    # 4. قواعد الاستدلال الافتراضي (Abductive)
+    # ============================================
+    
+    # إيجاد أفضل تفسير
+    best_explanation(?observation, ?explanation, ?score) :-
+        observation(?observation),
+        possible_explanations(?observation, ?explanations),
+        evaluate_explanations(?explanations, ?scores),
+        highest_score(?scores, ?explanation, ?score).
+    
+    # تفسير بناءً على المعرفة السابقة
+    explain_with_knowledge(?observation, ?explanation) :-
+        observation(?observation),
+        known_patterns(?patterns),
+        match_pattern(?observation, ?patterns, ?pattern),
+        extract_explanation(?pattern, ?explanation).
+    
+    # تفسير متعدد المستويات
+    multi_level_explanation(?observation, ?explanations) :-
+        observation(?observation),
+        direct_explanation(?observation, ?level1),
+        deeper_explanation(?level1, ?level2),
+        root_cause(?level2, ?level3),
+        combine_levels(?level1, ?level2, ?level3, ?explanations).
+    
+    # ============================================
+    # 5. قواعد الاستدلال القياسي (Analogical)
+    # ============================================
+    
+    # استدلال بالتشابه
+    analogical_inference(?source, ?target, ?conclusion) :-
+        similar_structure(?source, ?target, ?similarity),
+        known_property(?source, ?property),
+        ?similarity > 0.7,
+        infer_property(?target, ?property, ?conclusion).
+    
+    # نقل المعرفة بالقياس
+    transfer_knowledge(?source_domain, ?target_domain, ?knowledge) :-
+        domain_similarity(?source_domain, ?target_domain, ?sim),
+        knowledge_in_domain(?source_domain, ?knowledge),
+        ?sim > 0.6,
+        adapt_knowledge(?knowledge, ?target_domain, ?adapted),
+        apply_knowledge(?target_domain, ?adapted).
+    
+    # ============================================
+    # 6. قواعد الاستدلال المتسلسل
+    # ============================================
+    
+    # سلسلة استدلال
+    inference_chain(?start, ?end, ?chain) :-
+        fact(?start),
+        find_path(?start, ?end, ?path),
+        validate_chain(?path, ?chain).
+    
+    # استدلال متعدد الخطوات
+    multi_step_inference(?premises, ?conclusion, ?steps) :-
+        initial_facts(?premises),
+        apply_rules_iteratively(?premises, ?intermediate),
+        reach_conclusion(?intermediate, ?conclusion),
+        record_steps(?premises, ?intermediate, ?conclusion, ?steps).
+    
+    # ============================================
+    # 7. قواعد التعامل مع عدم اليقين
+    # ============================================
+    
+    # استدلال احتمالي
+    probabilistic_inference(?hypothesis, ?probability) :-
+        evidence(?evidence),
+        prior_probability(?hypothesis, ?prior),
+        likelihood(?evidence, ?hypothesis, ?likelihood),
+        calculate_posterior(?prior, ?likelihood, ?probability).
+    
+    # استدلال ضبابي (Fuzzy)
+    fuzzy_inference(?input, ?output, ?degree) :-
+        fuzzy_rules(?rules),
+        fuzzify(?input, ?fuzzy_input),
+        apply_fuzzy_rules(?fuzzy_input, ?rules, ?fuzzy_output),
+        defuzzify(?fuzzy_output, ?output, ?degree).
+    
+    # ============================================
+    # 8. قواعد الاستدلال السببي
+    # ============================================
+    
+    # تحديد السبب
+    identify_cause(?effect, ?cause, ?confidence) :-
+        observed_effect(?effect),
+        potential_causes(?effect, ?causes),
+        evaluate_causes(?causes, ?effect, ?scores),
+        best_cause(?scores, ?cause, ?confidence).
+    
+    # سلسلة سببية
+    causal_chain(?initial_cause, ?final_effect, ?chain) :-
+        cause(?initial_cause),
+        find_causal_path(?initial_cause, ?final_effect, ?path),
+        validate_causal_chain(?path, ?chain).
+    
+    # تأثير متعدد الأسباب
+    multiple_causes(?effect, ?causes, ?contributions) :-
+        observed_effect(?effect),
+        all_causes(?effect, ?causes),
+        calculate_contributions(?causes, ?effect, ?contributions).
+    
+    # ============================================
+    # 9. قواعد الاستدلال الزمني
+    # ============================================
+    
+    # استدلال زمني
+    temporal_inference(?event1, ?event2, ?relationship) :-
+        event_time(?event1, ?time1),
+        event_time(?event2, ?time2),
+        compare_times(?time1, ?time2, ?relationship).
+    
+    # تسلسل زمني
+    temporal_sequence(?events, ?sequence) :-
+        all_events(?events),
+        sort_by_time(?events, ?sequence).
+    
+    # تنبؤ زمني
+    temporal_prediction(?current_state, ?future_state, ?time) :-
+        current_state(?current_state),
+        temporal_patterns(?patterns),
+        match_pattern(?current_state, ?patterns, ?pattern),
+        project_future(?pattern, ?time, ?future_state).
+    
+    # ============================================
+    # 10. قواعد الاستدلال المكاني
+    # ============================================
+    
+    # علاقة مكانية
+    spatial_relationship(?obj1, ?obj2, ?relationship) :-
+        object_position(?obj1, ?pos1),
+        object_position(?obj2, ?pos2),
+        calculate_spatial_relation(?pos1, ?pos2, ?relationship).
+    
+    # استدلال مكاني
+    spatial_inference(?objects, ?configuration) :-
+        object_positions(?objects, ?positions),
+        analyze_configuration(?positions, ?configuration).
+    
+    # ============================================
+    # 11. قواعد الاستدلال بالتناقض
+    # ============================================
+    
+    # كشف التناقض
+    detect_contradiction(?fact1, ?fact2) :-
+        fact(?fact1),
+        fact(?fact2),
+        contradicts(?fact1, ?fact2).
+    
+    # حل التناقض
+    resolve_contradiction(?fact1, ?fact2, ?resolution) :-
+        detect_contradiction(?fact1, ?fact2),
+        evaluate_reliability(?fact1, ?reliability1),
+        evaluate_reliability(?fact2, ?reliability2),
+        choose_more_reliable(?fact1, ?fact2, ?reliability1, ?reliability2, ?resolution).
+    
+    # ============================================
+    # 12. قواعد الاستدلال بالأولوية
+    # ============================================
+    
+    # ترتيب حسب الأولوية
+    prioritize_inferences(?inferences, ?prioritized) :-
+        all_inferences(?inferences),
+        calculate_priorities(?inferences, ?priorities),
+        sort_by_priority(?inferences, ?priorities, ?prioritized).
+    
+    # اختيار أفضل استدلال
+    best_inference(?situation, ?inference) :-
+        possible_inferences(?situation, ?inferences),
+        evaluate_inferences(?inferences, ?scores),
+        highest_score(?scores, ?inference).
+    
+    # ============================================
+    # 13. قواعد التعلم من الاستدلال
+    # ============================================
+    
+    # تعلم قاعدة جديدة
+    learn_rule(?examples, ?new_rule) :-
+        successful_inferences(?examples),
+        extract_pattern(?examples, ?pattern),
+        generalize_pattern(?pattern, ?new_rule),
+        validate_rule(?new_rule).
+    
+    # تحسين قاعدة موجودة
+    improve_rule(?old_rule, ?improved_rule) :-
+        rule_performance(?old_rule, ?performance),
+        failure_cases(?old_rule, ?failures),
+        analyze_failures(?failures, ?insights),
+        refine_rule(?old_rule, ?insights, ?improved_rule).
+    
+    # ============================================
+    # 14. قواعد الاستدلال التكيفي
+    # ============================================
+    
+    # تكييف الاستدلال حسب السياق
+    adaptive_inference(?context, ?method, ?result) :-
+        analyze_context(?context, ?features),
+        select_inference_method(?features, ?method),
+        apply_method(?method, ?context, ?result).
+    
+    # تحسين الأداء
+    optimize_inference(?problem, ?optimized_approach) :-
+        problem_characteristics(?problem, ?chars),
+        historical_performance(?chars, ?history),
+        learn_from_history(?history, ?optimized_approach).
+    
+    # ============================================
+    # 15. قواعد الاستدلال المركب
+    # ============================================
+    
+    # دمج أنماط استدلال متعددة
+    hybrid_inference(?problem, ?solution, ?confidence) :-
+        deductive_inference(?problem, ?deductive_result, ?conf1),
+        inductive_inference(?problem, ?inductive_result, ?conf2),
+        abductive_inference(?problem, ?abductive_result, ?conf3),
+        combine_results(?deductive_result, ?inductive_result, ?abductive_result,
+                       ?conf1, ?conf2, ?conf3, ?solution, ?confidence).
+    
+    # استدلال متعدد المستويات
+    multi_level_inference(?input, ?output, ?levels) :-
+        level1_inference(?input, ?level1_result),
+        level2_inference(?level1_result, ?level2_result),
+        level3_inference(?level2_result, ?output),
+        record_levels(?level1_result, ?level2_result, ?output, ?levels).
+}
+
+# ============================================
+# دوال مساعدة بايثونية
+# ============================================
+
+def apply_inference_rule(rule_type, premises, context=None):
+    """تطبيق قاعدة استدلال"""
+    rules = {
+        "deductive": apply_deductive_inference,
+        "inductive": apply_inductive_inference,
+        "abductive": apply_abductive_inference,
+        "analogical": apply_analogical_inference
+    }
+    
+    if rule_type not in rules:
+        return {"success": False, "error": f"Unknown rule type: {rule_type}"}
+    
+    return rules[rule_type](premises, context)
+
+def apply_deductive_inference(premises, context):
+    """استدلال استنتاجي"""
+    # تطبيق قواعد المنطق الاستنتاجي
+    conclusions = []
+    for premise in premises:
+        if "implies" in premise:
+            # تطبيق modus ponens
+            if premise["antecedent"] in premises:
+                conclusions.append(premise["consequent"])
+    
+    return {"success": True, "conclusions": conclusions, "confidence": 1.0}
+
+def apply_inductive_inference(examples, context):
+    """استدلال استقرائي"""
+    # البحث عن أنماط مشتركة
+    if not examples:
+        return {"success": False, "error": "No examples provided"}
+    
+    # استخراج النمط المشترك
+    pattern = find_common_pattern(examples)
+    confidence = len(examples) / (len(examples) + 10)  # ثقة تزداد مع الأمثلة
+    
+    return {"success": True, "pattern": pattern, "confidence": confidence}
+
+def apply_abductive_inference(observation, context):
+    """استدلال افتراضي"""
+    # إيجاد أفضل تفسير
+    possible_explanations = generate_explanations(observation, context)
+    best_explanation = max(possible_explanations, key=lambda x: x["score"])
+    
+    return {"success": True, "explanation": best_explanation, 
+            "confidence": best_explanation["score"]}
+
+def apply_analogical_inference(source, target, context):
+    """استدلال قياسي"""
+    # حساب التشابه
+    similarity = calculate_similarity(source, target)
+    
+    if similarity > 0.7:
+        # نقل المعرفة
+        transferred_knowledge = transfer_knowledge(source, target, similarity)
+        return {"success": True, "knowledge": transferred_knowledge, 
+                "confidence": similarity}
+    
+    return {"success": False, "error": "Insufficient similarity"}
+
+def find_common_pattern(examples):
+    """إيجاد النمط المشترك"""
+    # تحليل بسيط للأمثلة
+    if not examples:
+        return None
+    
+    # استخراج الخصائص المشتركة
+    common = {}
+    for key in examples[0].keys():
+        values = [ex.get(key) for ex in examples]
+        if len(set(values)) == 1:
+            common[key] = values[0]
+    
+    return common
+
+def calculate_similarity(obj1, obj2):
+    """حساب التشابه بين كائنين"""
+    if not obj1 or not obj2:
+        return 0.0
+    
+    common_keys = set(obj1.keys()) & set(obj2.keys())
+    if not common_keys:
+        return 0.0
+    
+    matches = sum(1 for k in common_keys if obj1[k] == obj2[k])
+    return matches / len(common_keys)
+
+print("✅ تم تحميل قواعد الاستدلال المتقدم")
+print("🧠 الأنماط المتاحة: deductive, inductive, abductive, analogical")
+print("🔗 دعم الاستدلال المتسلسل والمركب")
+

@@ -1,0 +1,99 @@
+# اختبارات الاستثناءات في لغة بيان
+# Tests for Exceptions: raise / try / except / finally
+
+# 1) Catch-all except should catch string raises
+try:
+{
+    raise "خطأ"
+    print("لن تُطبع")
+}
+except:
+{
+    print("تم الالتقاط 1")
+}
+
+# 2) مطابقة النوع باستخدام صنف مخصص + as
+class MyError:
+{
+    def __init__(self, msg):
+    {
+        self.msg = msg
+    }
+}
+
+def cause():
+{
+    raise MyError("سيء")
+}
+
+try:
+{
+    cause()
+    print("لن تُطبع 2")
+}
+except MyError as e:
+{
+    print(e.msg)
+}
+
+# 3) finally يُنفذ دائماً
+try:
+{
+    print("في try")
+    raise "X"
+}
+except:
+{
+    print("في except")
+}
+finally:
+{
+    print("في finally")
+}
+
+# 4) تعدد معالجات except وترتيبها
+class OtherError:
+{
+}
+
+def raise_other():
+{
+    raise OtherError()
+}
+
+try:
+{
+    raise_other()
+}
+except MyError as e:
+{
+    print("Wrong handler")
+}
+except OtherError as oe:
+{
+    print("تم الالتقاط OtherError")
+}
+except:
+{
+    print("catch-all")
+}
+
+# 5) استثناء غير معالج داخل try الداخلي يجب أن يُلتقط خارجياً
+try:
+{
+    try:
+    {
+        raise "غير مُعالج"
+    }
+    except MyError as e:
+    {
+        print("لن تُطبع 3")
+    }
+}
+except:
+{
+    print("تم الالتقاط الخارجي")
+}
+
+print("✅ اختبارات الاستثناءات انتهت")
+

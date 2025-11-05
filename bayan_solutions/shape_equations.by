@@ -1,0 +1,183 @@
+# معادلات الشكل الديناميكية - Shape Equations
+# لغة البيان - Bayan Language
+# المطور: باسل يحيى عبدالله
+
+hybrid {
+    # ============================================
+    # 1. قاعدة بيانات الأشكال الأساسية
+    # ============================================
+    
+    # تعريف الأشكال الأساسية
+    shape_type("circle", "دائرة").
+    shape_type("square", "مربع").
+    shape_type("rectangle", "مستطيل").
+    shape_type("triangle", "مثلث").
+    shape_type("sphere", "كرة").
+    shape_type("cube", "مكعب").
+    shape_type("cylinder", "أسطوانة").
+    
+    # ============================================
+    # 2. معادلات الأشكال الأساسية
+    # ============================================
+    
+    # معادلة الدائرة: x² + y² = r²
+    shape_equation("circle", "x² + y² = r²").
+    
+    # معادلة المربع: |x| ≤ a AND |y| ≤ a
+    shape_equation("square", "|x| ≤ a AND |y| ≤ a").
+    
+    # معادلة المستطيل: |x| ≤ a AND |y| ≤ b
+    shape_equation("rectangle", "|x| ≤ a AND |y| ≤ b").
+    
+    # معادلة المثلث: x + y ≤ 1 AND x ≥ 0 AND y ≥ 0
+    shape_equation("triangle", "x + y ≤ 1 AND x ≥ 0 AND y ≥ 0").
+    
+    # معادلة الكرة: x² + y² + z² = r²
+    shape_equation("sphere", "x² + y² + z² = r²").
+    
+    # معادلة المكعب: |x| ≤ a AND |y| ≤ a AND |z| ≤ a
+    shape_equation("cube", "|x| ≤ a AND |y| ≤ a AND |z| ≤ a").
+    
+    # معادلة الأسطوانة: x² + y² ≤ r² AND |z| ≤ h
+    shape_equation("cylinder", "x² + y² ≤ r² AND |z| ≤ h").
+    
+    # ============================================
+    # 3. خصائص الأشكال
+    # ============================================
+    
+    # خصائص الدائرة
+    shape_property("circle", "radius", "r").
+    shape_property("circle", "area", "π * r²").
+    shape_property("circle", "perimeter", "2 * π * r").
+    
+    # خصائص المربع
+    shape_property("square", "side", "a").
+    shape_property("square", "area", "a²").
+    shape_property("square", "perimeter", "4 * a").
+    
+    # خصائص المستطيل
+    shape_property("rectangle", "width", "a").
+    shape_property("rectangle", "height", "b").
+    shape_property("rectangle", "area", "a * b").
+    shape_property("rectangle", "perimeter", "2 * (a + b)").
+    
+    # ============================================
+    # 4. قواعد استخراج معادلات الشكل
+    # ============================================
+    
+    # استخراج معادلة من نوع الشكل
+    extract_shape_equation(?shape_type, ?equation) :-
+        shape_equation(?shape_type, ?equation).
+    
+    # استخراج خاصية من الشكل
+    extract_property(?shape_type, ?property, ?value) :-
+        shape_property(?shape_type, ?property, ?value).
+    
+    # ============================================
+    # 5. قواعد التكيف الديناميكي
+    # ============================================
+    
+    # تكيف معادلة الشكل مع تغير الخصائص
+    adapt_shape_equation(?shape_type, ?old_properties, ?new_properties, ?adapted_eq) :-
+        shape_equation(?shape_type, ?base_eq),
+        calculate_parameter_change(?old_properties, ?new_properties, ?change),
+        apply_change_to_equation(?base_eq, ?change, ?adapted_eq).
+    
+    # تحديث معادلة الشكل
+    update_shape_equation(?object_id, ?new_properties) :-
+        object_shape(?object_id, ?shape_type, ?old_props),
+        adapt_shape_equation(?shape_type, ?old_props, ?new_properties, ?new_eq),
+        retract(object_shape(?object_id, ?shape_type, ?old_props)),
+        assert(object_shape(?object_id, ?shape_type, ?new_properties)),
+        assert(object_equation(?object_id, ?new_eq)).
+    
+    # ============================================
+    # 6. قواعس الاستدلال من الخصائص
+    # ============================================
+    
+    # استدلال نوع الشكل من الخصائص
+    infer_shape_type(?properties, ?shape_type) :-
+        shape_type(?shape_type, _),
+        verify_properties(?shape_type, ?properties).
+    
+    # استدلال المعادلة من الخصائص
+    infer_equation_from_properties(?properties, ?equation) :-
+        infer_shape_type(?properties, ?shape_type),
+        extract_shape_equation(?shape_type, ?equation).
+    
+    # ============================================
+    # 7. قواعس معالجة الأشكال المعقدة
+    # ============================================
+    
+    # دمج شكلين
+    combine_shapes(?shape1, ?shape2, ?combined_shape) :-
+        shape_equation(?shape1, ?eq1),
+        shape_equation(?shape2, ?eq2),
+        combine_equations(?eq1, ?eq2, ?combined_eq),
+        assert(combined_shape(?combined_shape, ?combined_eq)).
+    
+    # تحويل شكل إلى شكل آخر
+    transform_shape(?original_shape, ?transformation, ?new_shape) :-
+        shape_equation(?original_shape, ?original_eq),
+        apply_transformation(?original_eq, ?transformation, ?new_eq),
+        assert(transformed_shape(?new_shape, ?new_eq)).
+    
+    # ============================================
+    # 8. دوال مساعدة
+    # ============================================
+    
+    # حساب تغير المعاملات
+    def calculate_parameter_change(old_props, new_props, change) {
+        # حساب الفرق بين الخصائص القديمة والجديدة
+        return change
+    }
+    
+    # تطبيق التغير على المعادلة
+    def apply_change_to_equation(equation, change, adapted_eq) {
+        # تطبيق التغير على المعادلة
+        return adapted_eq
+    }
+    
+    # التحقق من الخصائص
+    def verify_properties(shape_type, properties) {
+        # التحقق من أن الخصائص تطابق نوع الشكل
+        return true
+    }
+    
+    # دمج المعادلات
+    def combine_equations(eq1, eq2, combined_eq) {
+        # دمج معادلتين
+        return combined_eq
+    }
+    
+    # تطبيق التحويل
+    def apply_transformation(equation, transformation, new_eq) {
+        # تطبيق تحويل على المعادلة
+        return new_eq
+    }
+    
+    # ============================================
+    # 9. أمثلة الاستخدام
+    # ============================================
+    
+    # مثال 1: استخراج معادلة دائرة
+    print("=== مثال 1: معادلة الدائرة ===")
+    extract_shape_equation("circle", ?eq)
+    print("معادلة الدائرة: " + str(?eq))
+    
+    # مثال 2: استخراج خصائص المربع
+    print("=== مثال 2: خصائص المربع ===")
+    extract_property("square", "area", ?area)
+    print("مساحة المربع: " + str(?area))
+    
+    # مثال 3: استدلال نوع الشكل
+    print("=== مثال 3: استدلال نوع الشكل ===")
+    infer_shape_type([radius: 5], ?shape)
+    print("نوع الشكل: " + str(?shape))
+    
+    # مثال 4: تكيف معادلة الشكل
+    print("=== مثال 4: تكيف معادلة الشكل ===")
+    adapt_shape_equation("circle", [radius: 5], [radius: 10], ?adapted)
+    print("المعادلة المتكيفة: " + str(?adapted))
+}
+

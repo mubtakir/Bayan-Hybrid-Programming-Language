@@ -1,0 +1,205 @@
+# مثال على استخدام المزخرفات (@) في لغة البيان
+# Example of using decorators (@) in Bayan language
+
+# مثال 1: مزخرف بسيط
+# Example 1: Simple decorator
+@log_calls
+def greet(name): {
+    return "Hello, " + name
+}
+
+# مثال 2: مزخرف مع معاملات
+# Example 2: Decorator with arguments
+@cache(timeout=300)
+def expensive_calculation(x, y): {
+    return x * y + x / y
+}
+
+# مثال 3: مزخرفات متعددة
+# Example 3: Multiple decorators
+@authenticate
+@authorize("admin")
+@log_calls
+def delete_user(user_id): {
+    return "User " + user_id + " deleted"
+}
+
+# مثال 4: مزخرف على دالة غير متزامنة
+# Example 4: Decorator on async function
+@async_cache
+async def fetch_data(url): {
+    # محاكاة جلب البيانات
+    # Simulate data fetching
+    return "Data from " + url
+}
+
+# مثال 5: مزخرف على صنف
+# Example 5: Decorator on class
+@dataclass
+class Person: {
+    def __init__(self, name, age): {
+        self.name = name
+        self.age = age
+    }
+}
+
+# مثال 6: مزخرفات متعددة على صنف
+# Example 6: Multiple decorators on class
+@singleton
+@log_creation
+class Database: {
+    def __init__(self, connection_string): {
+        self.connection_string = connection_string
+    }
+    
+    def connect(self): {
+        return "Connected to " + self.connection_string
+    }
+}
+
+# مثال 7: مزخرف للتوجيه (routing)
+# Example 7: Routing decorator
+@route("/api/users")
+@method("GET")
+def get_users(): {
+    return ["user1", "user2", "user3"]
+}
+
+@route("/api/users")
+@method("POST")
+def create_user(data): {
+    return "User created: " + data
+}
+
+# مثال 8: مزخرف للتحقق من الصلاحيات
+# Example 8: Permission checking decorator
+@require_permission("read")
+def read_file(filename): {
+    return "Reading " + filename
+}
+
+@require_permission("write")
+def write_file(filename, content): {
+    return "Writing to " + filename
+}
+
+# مثال 9: مزخرف للتوقيت
+# Example 9: Timing decorator
+@measure_time
+def slow_function(): {
+    sum = 0
+    for i in range(1000000): {
+        sum = sum + i
+    }
+    return sum
+}
+
+# مثال 10: مزخرف للتخزين المؤقت مع مفتاح مخصص
+# Example 10: Caching decorator with custom key
+@cache_with_key("user_data")
+def get_user_data(user_id): {
+    return "Data for user " + user_id
+}
+
+# مثال 11: مزخرف للمحاولة مرة أخرى
+# Example 11: Retry decorator
+@retry(max_attempts=3, delay=1)
+def unreliable_api_call(): {
+    # محاكاة استدعاء API غير موثوق
+    # Simulate unreliable API call
+    return "API response"
+}
+
+# مثال 12: مزخرف للتحقق من النوع
+# Example 12: Type checking decorator
+@validate_types(int, int)
+def add_numbers(a, b): {
+    return a + b
+}
+
+# مثال 13: مزخرف للتسجيل المتقدم
+# Example 13: Advanced logging decorator
+@log_with_level("INFO")
+@log_args
+@log_return
+def process_data(data): {
+    return "Processed: " + data
+}
+
+# استخدام الأمثلة
+# Using the examples
+
+# استدعاء دالة مع مزخرف بسيط
+# Calling function with simple decorator
+result = greet("أحمد")
+print(result)  # Hello, أحمد
+
+# استدعاء دالة مع مزخرف ومعاملات
+# Calling function with decorator and arguments
+result = expensive_calculation(10, 5)
+print(result)  # 52.0
+
+# استدعاء دالة مع مزخرفات متعددة
+# Calling function with multiple decorators
+result = delete_user("123")
+print(result)  # User 123 deleted
+
+# استدعاء دالة غير متزامنة مع مزخرف
+# Calling async function with decorator
+result = await fetch_data("https://api.example.com")
+print(result)  # Data from https://api.example.com
+
+# إنشاء كائن من صنف مع مزخرف
+# Creating object from class with decorator
+person = Person("محمد", 25)
+print(person.name)  # محمد
+print(person.age)   # 25
+
+# استخدام صنف singleton
+# Using singleton class
+db1 = Database("localhost:5432")
+db2 = Database("localhost:5432")
+# db1 و db2 هما نفس الكائن
+# db1 and db2 are the same object
+
+# استدعاء دوال التوجيه
+# Calling routing functions
+users = get_users()
+print(users)  # ["user1", "user2", "user3"]
+
+new_user = create_user("user4")
+print(new_user)  # User created: user4
+
+# استدعاء دوال التحقق من الصلاحيات
+# Calling permission checking functions
+content = read_file("data.txt")
+print(content)  # Reading data.txt
+
+write_file("output.txt", "Hello, World!")
+# Writing to output.txt
+
+# استدعاء دالة التوقيت
+# Calling timing function
+result = slow_function()
+print(result)  # 499999500000
+
+# استدعاء دالة التخزين المؤقت
+# Calling caching function
+data = get_user_data("456")
+print(data)  # Data for user 456
+
+# استدعاء دالة المحاولة مرة أخرى
+# Calling retry function
+response = unreliable_api_call()
+print(response)  # API response
+
+# استدعاء دالة التحقق من النوع
+# Calling type checking function
+sum = add_numbers(5, 10)
+print(sum)  # 15
+
+# استدعاء دالة التسجيل المتقدم
+# Calling advanced logging function
+result = process_data("test data")
+print(result)  # Processed: test data
+

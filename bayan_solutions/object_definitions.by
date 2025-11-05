@@ -1,0 +1,340 @@
+# تعريفات الكائنات الرياضية - Mathematical Object Definitions
+# لغة البيان - Bayan Language
+# نظام بصيرة AI - Baserah AI System
+# المطور: باسل يحيى عبدالله
+# المعادلة الأم: O = (id, Φ, Ψ(t), Γ)
+
+hybrid {
+    # ============================================
+    # 1. قاعدة بيانات أنواع الكائنات
+    # ============================================
+    
+    # الكائنات الأساسية
+    object_category("physical", "كائن فيزيائي").
+    object_category("abstract", "كائن مجرد").
+    object_category("composite", "كائن مركب").
+    object_category("virtual", "كائن افتراضي").
+    
+    # أنواع الكائنات الفيزيائية
+    object_type("ball", "physical", "كرة").
+    object_type("box", "physical", "صندوق").
+    object_type("wall", "physical", "جدار").
+    object_type("person", "physical", "شخص").
+    object_type("animal", "physical", "حيوان").
+    
+    # أنواع الكائنات المجردة
+    object_type("concept", "abstract", "مفهوم").
+    object_type("idea", "abstract", "فكرة").
+    object_type("emotion", "abstract", "عاطفة").
+    object_type("relationship", "abstract", "علاقة").
+    
+    # ============================================
+    # 2. الخصائص الثابتة (Φ - Phi)
+    # ============================================
+    
+    # خصائص ثابتة للكرة
+    static_property("ball", "material", "rubber").
+    static_property("ball", "shape_type", "sphere").
+    static_property("ball", "elasticity", 0.8).
+    
+    # خصائص ثابتة للصندوق
+    static_property("box", "material", "wood").
+    static_property("box", "shape_type", "cube").
+    static_property("box", "rigidity", 0.9).
+    
+    # خصائص ثابتة للجدار
+    static_property("wall", "material", "brick").
+    static_property("wall", "shape_type", "rectangular_prism").
+    static_property("wall", "strength", 0.95).
+    
+    # ============================================
+    # 3. الخصائص الديناميكية (Ψ(t) - Psi)
+    # ============================================
+    
+    # خصائص ديناميكية للكرة
+    dynamic_property("ball", "position", "vector3").
+    dynamic_property("ball", "velocity", "vector3").
+    dynamic_property("ball", "rotation", "quaternion").
+    dynamic_property("ball", "temperature", "scalar").
+    
+    # خصائص ديناميكية للشخص
+    dynamic_property("person", "position", "vector3").
+    dynamic_property("person", "mood", "enum").
+    dynamic_property("person", "energy", "scalar").
+    dynamic_property("person", "attention", "vector").
+    
+    # ============================================
+    # 4. دالة الشكل (Γ - Gamma)
+    # ============================================
+    
+    # معادلة شكل الكرة
+    shape_equation("ball", "sphere", "x² + y² + z² = r²").
+    shape_parameter("ball", "radius", "r").
+    
+    # معادلة شكل الصندوق
+    shape_equation("box", "cube", "|x| ≤ a AND |y| ≤ a AND |z| ≤ a").
+    shape_parameter("box", "side_length", "a").
+    
+    # معادلة شكل الجدار
+    shape_equation("wall", "rectangular_prism", 
+        "|x| ≤ a AND |y| ≤ b AND |z| ≤ c").
+    shape_parameter("wall", "width", "a").
+    shape_parameter("wall", "height", "b").
+    shape_parameter("wall", "depth", "c").
+    
+    # ============================================
+    # 5. قواعد إنشاء الكائنات
+    # ============================================
+    
+    # إنشاء كائن جديد
+    create_object(?id, ?type, ?static_props, ?dynamic_props, ?shape) :-
+        object_type(?type, ?category, _),
+        validate_properties(?type, ?static_props, ?dynamic_props),
+        validate_shape(?type, ?shape),
+        assign_id(?id),
+        initialize_object(?id, ?type, ?static_props, ?dynamic_props, ?shape).
+    
+    # التحقق من صحة الخصائص
+    validate_properties(?type, ?static_props, ?dynamic_props) :-
+        required_static_properties(?type, ?req_static),
+        required_dynamic_properties(?type, ?req_dynamic),
+        properties_match(?static_props, ?req_static),
+        properties_match(?dynamic_props, ?req_dynamic).
+    
+    # ============================================
+    # 6. قواعد تحديث الكائنات
+    # ============================================
+    
+    # تحديث خاصية ديناميكية
+    update_dynamic_property(?obj_id, ?property, ?new_value) :-
+        object_exists(?obj_id),
+        has_dynamic_property(?obj_id, ?property),
+        property_type_matches(?property, ?new_value),
+        set_property(?obj_id, ?property, ?new_value).
+    
+    # تحديث الموقع
+    update_position(?obj_id, ?new_pos) :-
+        object_exists(?obj_id),
+        has_dynamic_property(?obj_id, "position"),
+        valid_position(?new_pos),
+        update_dynamic_property(?obj_id, "position", ?new_pos).
+    
+    # ============================================
+    # 7. قواعد الكائنات المركبة
+    # ============================================
+    
+    # إنشاء كائن مركب
+    create_composite(?composite_id, ?components, ?structure) :-
+        all_objects_exist(?components),
+        valid_structure(?structure),
+        calculate_emergent_properties(?components, ?structure, ?emergent),
+        create_object(?composite_id, "composite", ?emergent, _, _).
+    
+    # خصائص ناشئة
+    emergent_property(?composite, ?property, ?value) :-
+        composite_object(?composite),
+        component_objects(?composite, ?components),
+        structural_relationship(?composite, ?structure),
+        calculate_emergent(?components, ?structure, ?property, ?value).
+    
+    # قوة الكائن المركب
+    composite_strength(?composite, ?strength) :-
+        composite_object(?composite),
+        component_objects(?composite, ?components),
+        component_strengths(?components, ?strengths),
+        bond_quality(?composite, ?quality),
+        combine_strengths(?strengths, ?quality, ?strength).
+    
+    # ============================================
+    # 8. قواعد التفاعل بين الكائنات
+    # ============================================
+    
+    # يمكن للكائنين التفاعل
+    can_interact(?obj1, ?obj2) :-
+        object_exists(?obj1),
+        object_exists(?obj2),
+        compatible_types(?obj1, ?obj2),
+        within_range(?obj1, ?obj2).
+    
+    # حساب المسافة بين كائنين
+    distance_between(?obj1, ?obj2, ?distance) :-
+        object_position(?obj1, ?pos1),
+        object_position(?obj2, ?pos2),
+        calculate_distance(?pos1, ?pos2, ?distance).
+    
+    # ضمن النطاق
+    within_range(?obj1, ?obj2) :-
+        distance_between(?obj1, ?obj2, ?distance),
+        interaction_range(?obj1, ?range),
+        ?distance <= ?range.
+    
+    # ============================================
+    # 9. قواعد التحويلات
+    # ============================================
+    
+    # تحويل الكائن
+    transform_object(?obj_id, ?transformation, ?params) :-
+        object_exists(?obj_id),
+        valid_transformation(?transformation),
+        apply_transformation(?obj_id, ?transformation, ?params),
+        update_shape(?obj_id, ?transformation, ?params).
+    
+    # تدوير الكائن
+    rotate_object(?obj_id, ?angle, ?axis) :-
+        object_exists(?obj_id),
+        has_shape(?obj_id),
+        apply_rotation(?obj_id, ?angle, ?axis).
+    
+    # تحجيم الكائن
+    scale_object(?obj_id, ?scale_factor) :-
+        object_exists(?obj_id),
+        has_shape(?obj_id),
+        apply_scaling(?obj_id, ?scale_factor).
+    
+    # ============================================
+    # 10. قواعد الاستعلام عن الكائنات
+    # ============================================
+    
+    # البحث عن كائنات بخاصية معينة
+    find_objects_with_property(?property, ?value, ?objects) :-
+        all_objects(?all),
+        filter_by_property(?all, ?property, ?value, ?objects).
+    
+    # البحث عن كائنات قريبة
+    find_nearby_objects(?obj_id, ?radius, ?nearby) :-
+        object_position(?obj_id, ?pos),
+        all_objects(?all),
+        filter_by_distance(?all, ?pos, ?radius, ?nearby).
+    
+    # البحث عن كائنات من نوع معين
+    find_objects_of_type(?type, ?objects) :-
+        all_objects(?all),
+        filter_by_type(?all, ?type, ?objects).
+    
+    # ============================================
+    # 11. قواعد التحقق من الحالة
+    # ============================================
+    
+    # الكائن ساكن
+    is_stationary(?obj_id) :-
+        object_exists(?obj_id),
+        object_velocity(?obj_id, ?velocity),
+        velocity_is_zero(?velocity).
+    
+    # الكائن متحرك
+    is_moving(?obj_id) :-
+        object_exists(?obj_id),
+        object_velocity(?obj_id, ?velocity),
+        velocity_not_zero(?velocity).
+    
+    # الكائن مستقر
+    is_stable(?obj_id) :-
+        object_exists(?obj_id),
+        is_stationary(?obj_id),
+        no_external_forces(?obj_id).
+    
+    # ============================================
+    # 12. قواعد الفيزياء
+    # ============================================
+    
+    # تطبيق الجاذبية
+    apply_gravity(?obj_id) :-
+        object_exists(?obj_id),
+        has_mass(?obj_id, ?mass),
+        gravity_constant(?g),
+        calculate_force(?mass, ?g, ?force),
+        apply_force(?obj_id, ?force).
+    
+    # تطبيق الاحتكاك
+    apply_friction(?obj_id) :-
+        object_exists(?obj_id),
+        is_moving(?obj_id),
+        friction_coefficient(?obj_id, ?mu),
+        calculate_friction(?obj_id, ?mu, ?friction_force),
+        apply_force(?obj_id, ?friction_force).
+    
+    # ============================================
+    # 13. قواعد الذاكرة والتاريخ
+    # ============================================
+    
+    # تسجيل حالة الكائن
+    record_state(?obj_id, ?timestamp) :-
+        object_exists(?obj_id),
+        get_all_properties(?obj_id, ?props),
+        store_state(?obj_id, ?timestamp, ?props).
+    
+    # استرجاع حالة سابقة
+    restore_state(?obj_id, ?timestamp) :-
+        object_exists(?obj_id),
+        retrieve_state(?obj_id, ?timestamp, ?props),
+        apply_properties(?obj_id, ?props).
+    
+    # تتبع تاريخ الكائن
+    object_history(?obj_id, ?history) :-
+        object_exists(?obj_id),
+        retrieve_all_states(?obj_id, ?history).
+    
+    # ============================================
+    # 14. قواعد التحليل والإحصاء
+    # ============================================
+    
+    # حساب متوسط الخاصية
+    average_property(?objects, ?property, ?average) :-
+        extract_property_values(?objects, ?property, ?values),
+        calculate_average(?values, ?average).
+    
+    # إحصائيات الكائنات
+    object_statistics(?type, ?stats) :-
+        find_objects_of_type(?type, ?objects),
+        count_objects(?objects, ?count),
+        average_properties(?objects, ?averages),
+        compile_stats(?count, ?averages, ?stats).
+}
+
+# ============================================
+# دوال مساعدة بايثونية
+# ============================================
+
+def create_object_template(obj_type):
+    """إنشاء قالب كائن"""
+    templates = {
+        "ball": {
+            "id": None,
+            "static_props": {"material": "rubber", "elasticity": 0.8},
+            "dynamic_props": {"position": [0, 0, 0], "velocity": [0, 0, 0]},
+            "shape": {"type": "sphere", "radius": 1.0}
+        },
+        "box": {
+            "id": None,
+            "static_props": {"material": "wood", "rigidity": 0.9},
+            "dynamic_props": {"position": [0, 0, 0], "rotation": [0, 0, 0]},
+            "shape": {"type": "cube", "side_length": 1.0}
+        }
+    }
+    return templates.get(obj_type, {})
+
+def validate_object_definition(obj_def):
+    """التحقق من صحة تعريف الكائن"""
+    required_keys = ["id", "static_props", "dynamic_props", "shape"]
+    for key in required_keys:
+        if key not in obj_def:
+            return False, f"Missing required key: {key}"
+    return True, "Valid"
+
+def calculate_emergent_properties(components, structure):
+    """حساب الخصائص الناشئة"""
+    # هنا يتم حساب الخصائص الناشئة من المكونات
+    emergent = {}
+    
+    # مثال: قوة الكائن المركب
+    if "strength" in structure:
+        total_strength = sum(c.get("strength", 0) for c in components)
+        bond_quality = structure.get("bond_quality", 1.0)
+        emergent["strength"] = total_strength * bond_quality
+    
+    return emergent
+
+print("✅ تم تحميل تعريفات الكائنات الرياضية")
+print("📊 الكائنات المتاحة: ball, box, wall, person, animal")
+print("🔧 المعادلة الأم: O = (id, Φ, Ψ(t), Γ)")
+

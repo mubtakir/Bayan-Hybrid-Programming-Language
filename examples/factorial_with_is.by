@@ -1,0 +1,57 @@
+# مثال: حساب المضروب (Factorial) باستخدام عامل is
+# Example: Factorial calculation using 'is' operator
+
+hybrid {
+    # الحالة الأساسية: مضروب 0 هو 1
+    # Base case: factorial of 0 is 1
+    fact factorial(0, 1).
+    
+    # الحالة العودية: مضروب N هو N * مضروب(N-1)
+    # Recursive case: factorial of N is N * factorial(N-1)
+    rule factorial(?N, ?F) :- 
+        ?N > 0,
+        ?N1 is ?N - 1,
+        factorial(?N1, ?F1),
+        ?F is ?N * ?F1.
+}
+
+# اختبار factorial
+# Test factorial
+print("Testing factorial with 'is' operator:")
+print("=" * 50)
+
+# حساب مضروب 5
+# Calculate factorial of 5
+results = query factorial(5, ?F)?
+print("Query: factorial(5, ?F)")
+print("Results:", results)
+if results:
+    print("5! =", results[0]['F'])
+print()
+
+# حساب مضروب 0
+# Calculate factorial of 0
+results = query factorial(0, ?F)?
+print("Query: factorial(0, ?F)")
+print("Results:", results)
+if results:
+    print("0! =", results[0]['F'])
+print()
+
+# حساب مضروب 6
+# Calculate factorial of 6
+results = query factorial(6, ?F)?
+print("Query: factorial(6, ?F)")
+print("Results:", results)
+if results:
+    print("6! =", results[0]['F'])
+print()
+
+# حساب مضروب 10
+# Calculate factorial of 10
+results = query factorial(10, ?F)?
+print("Query: factorial(10, ?F)")
+print("Results:", results)
+if results:
+    print("10! =", results[0]['F'])
+
